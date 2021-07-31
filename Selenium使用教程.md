@@ -1,14 +1,14 @@
 # Selenium使用教程
 
-## 一, selenium简单体验
+## 一, selenium
 
 ```python
 from selenium import webdriver		#导入selenium包
-browser = webdriver.Chrome()		#实例化浏览器对象
+brower = webdriver.Chrome()		#实例化浏览器对象
 url = "https://www.baidu.com/"		#打开链接
-browser.get(url=url)				#打开链接
-print(browser.page_source)			#打印获取页面信息
-browser.close()						#关闭浏览器对象
+brower.get(url=url)				#打开链接
+print(brower.page_source)			#打印获取页面信息
+brower.close()						#关闭浏览器对象
 ```
 
 

@@ -58,12 +58,16 @@ select * from DomainAreaSpecificLiterals where szLanguageCode='zh-CN' and szDoma
 
 
 
-## 5、SNJ-价签打印格式错误（未解决，问题待跟进）
+## 5、SNJ-价签打印格式错误
 
 ![image-20210429125612620](C:\Users\shanzhi_feng_ext\AppData\Roaming\Typora\typora-user-images\image-20210429125612620.png)
 
 ```
-可以通过浏览器自带的打印配置调整打印的大小
+可以通过浏览器自带的打印配置调整打印的大小。
+
+打印机配置与程序不匹配导致的。
+
+补充：使用以上方式本地可行，在客户电脑不行。改问题最终是客户换了一台以前能够正常打印的电脑解决了。
 ```
 
 ![image-20210428191327364](C:\Users\shanzhi_feng_ext\AppData\Roaming\Typora\typora-user-images\image-20210428191327364.png)
@@ -100,7 +104,7 @@ UseAutoTimeBreak的值true是可以自动签退，false不能签退
 ![image-20210429125858919](C:\Users\shanzhi_feng_ext\AppData\Roaming\Typora\typora-user-images\image-20210429125858919.png)
 
 ```
-数据库配置是根据商品描述的第二个描述取值的，修改数据库读取信息规则解决
+数据库配置是根据商品描述的第二个描述项desc1取值的，修改数据库读取名称规则规则，改为desc解决
 修改脚本：
 update POSUIPresentationPiece set  szTAObjectCondition='ART.szDesc<>',szTAFormat='TAOBJECT(ART.szDesc)' 
 where szPresentationID='Article_number_ALDI' and szPresentationPieceID='Article_desc';
@@ -216,3 +220,19 @@ delete from ItemLookupCode
 日志显示支付方式有限额，请求诺诺方协助处理，退款问题。
 
 ![image-20210512100318572](C:\Users\shanzhi_feng_ext\AppData\Roaming\Typora\typora-user-images\image-20210512100318572.png)
+
+
+
+## 14、SNJ-无法新增商品
+
+这个问题是因为其他门店新增了商品，商品的字段预估在数据库中是设置了唯一键，导致不能重复添加。
+
+```
+解决方案：
+1、使用批量导入，可以新建成功。注意，该方法估计是update操作，会把之前已经创建的数据给覆盖掉，导致金额、库存、是新导入的数据，造成了数据覆盖。有风险。
+
+2、新建商品的商品编码和Pos商品编码加个字符戳，可以解决该问题，推荐。操作如下图。
+```
+
+![image-20210722124703536](resource_img/image-20210722124703536.png)
+
